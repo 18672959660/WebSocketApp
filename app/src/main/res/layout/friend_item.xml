@@ -4,14 +4,27 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:padding="10dp">
-
+    <com.caojing.websocketapp.view.CircleImageView
+        android:id="@+id/circleImageView_from"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@mipmap/toimg"
+        app:border_color="@color/colorAccent"
+        app:border_width="2dp" />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="10dp"
+    android:gravity="center"
+    android:orientation="vertical">
     <TextView
         android:id="@+id/item_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="id"
+        android:visibility="gone"
         android:textColor="@android:color/black"
         android:textSize="18sp" />
 
@@ -41,8 +54,11 @@
         android:id="@+id/item_msg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:textColor="@color/colorAccent"
         android:textSize="18sp"
+        android:lines="1"
+        android:ellipsize="end"
         app:emojiSize="26sp"/>
-
+</LinearLayout>
 </LinearLayout>

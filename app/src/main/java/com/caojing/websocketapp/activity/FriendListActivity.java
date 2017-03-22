@@ -80,7 +80,7 @@ public class FriendListActivity extends BaseActivity implements RecyclerArrayAda
         esfrecyclerView = (EasyRecyclerView) findViewById(R.id.esfrecyclerView);
         esfrecyclerView.setLayoutManager(new LinearLayoutManager(this));
         DividerDecoration itemDecoration = new DividerDecoration(Color.GRAY, 1, 0, 0);
-        itemDecoration.setDrawLastItem(false);//设置最后一行item是否有分割线,默认true.
+        itemDecoration.setDrawLastItem(true);//设置最后一行item是否有分割线,默认true.
         esfrecyclerView.addItemDecoration(itemDecoration);
         adapter = new FriendListAdapter(this);
         esfrecyclerView.setAdapterWithProgress(adapter);

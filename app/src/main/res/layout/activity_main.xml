@@ -23,7 +23,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:background="@android:color/white">
 
         <com.vanniktech.emoji.EmojiEditText
@@ -38,14 +38,16 @@
             android:minHeight="20sp"
             app:emojiSize="26sp" />
 
-        <Button
+        <ImageView
             android:id="@+id/btn_emoji"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:padding="8dp"
             android:layout_marginLeft="1dp"
+            android:scaleType="fitCenter"
             android:background="@color/colorAccent"
-            android:text="表情" />
+            android:src="@drawable/chatting_biaoqing_btn_normal"/>
 
         <Button
             android:id="@+id/btn_send"

@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:hint="@string/prompt_email"
-                android:text="5960"
+                android:text="1760"
                 android:maxLines="1"
                 android:singleLine="true" />
 
@@ -38,7 +38,7 @@
                 android:imeOptions="actionUnspecified"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:text="曹晶" />
+                android:text="北极光" />
 
             <RadioGroup
                 android:id="@+id/raidgroup_id"

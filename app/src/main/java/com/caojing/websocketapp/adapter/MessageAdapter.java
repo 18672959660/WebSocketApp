@@ -50,7 +50,7 @@ public class MessageAdapter extends RecyclerArrayAdapter<MessageDBInfo> {
 
         @Override
         public void setData(MessageDBInfo data) {
-            text_time.setText(data.getTime());
+            text_time.setText(data.getTime().replace("T","  "));
             if (LoginInfo.id .equals(getItem(getAdapterPosition()).getFromuid())){
                 view_who.setVisibility(View.GONE);
                 view_me.setVisibility(View.VISIBLE);

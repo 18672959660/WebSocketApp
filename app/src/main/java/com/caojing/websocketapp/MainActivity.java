@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,7 +59,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private TextView message_name;
     private MyServiceConnection serviceConnection;
     private EmojiPopup emojiPopup;
-    private Button btn_emoji;
+    private ImageView btn_emoji;
     private LinearLayout root_view;
 
     /**
@@ -103,7 +104,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         message_name.setText(fromuserName);
         esfrecyclerView = (EasyRecyclerView) findViewById(R.id.esfrecyclerView);
         emojiEditText = (EmojiEditText) findViewById(R.id.emojiEditText);
-        btn_emoji = (Button) findViewById(R.id.btn_emoji);
+        btn_emoji = (ImageView) findViewById(R.id.btn_emoji);
         btn_emoji.setOnClickListener(this);
         mSend = (Button) findViewById(R.id.btn_send);
         mSend.setOnClickListener(this);

@@ -19,7 +19,7 @@ import com.vanniktech.emoji.EmojiTextView;
 import java.util.List;
 
 /**
- *  朋友列表适配器
+ * 朋友列表适配器
  * Created by Administrator on 2017/3/2 0002.
  */
 
@@ -35,7 +35,7 @@ public class FriendListAdapter extends RecyclerArrayAdapter<FriendDBInfo> {
         return new FriendListViewHolder(parent, R.layout.friend_item);
     }
 
-    class FriendListViewHolder extends BaseViewHolder<FriendDBInfo>{
+    class FriendListViewHolder extends BaseViewHolder<FriendDBInfo> {
 
         private TextView item_id;
         private TextView item_name;
@@ -44,10 +44,10 @@ public class FriendListAdapter extends RecyclerArrayAdapter<FriendDBInfo> {
 
         public FriendListViewHolder(ViewGroup parent, @LayoutRes int res) {
             super(parent, res);
-            item_id=$(R.id.item_id);
-            item_name=$(R.id.item_name);
-            item_tip=$(R.id.item_tip);
-            item_msg=$(R.id.item_msg);
+            item_id = $(R.id.item_id);
+            item_name = $(R.id.item_name);
+            item_tip = $(R.id.item_tip);
+            item_msg = $(R.id.item_msg);
         }
 
         @Override
@@ -55,10 +55,10 @@ public class FriendListAdapter extends RecyclerArrayAdapter<FriendDBInfo> {
             item_id.setText(data.getUserId());
             item_name.setText(data.getUserName());
             item_msg.setText(data.getMsg());
-            if ("1".equals(data.getNewMsg())){
+            if ("1".equals(data.getNewMsg())) {
                 //如果提示大于0，就提示用户有几条未读消息，后期可以根据tip的大小来设置有几条未读消息
                 item_tip.setVisibility(itemView.VISIBLE);
-            }else{
+            } else {
                 //没有未读消息
                 item_tip.setVisibility(itemView.GONE);
             }

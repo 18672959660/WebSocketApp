@@ -16,23 +16,47 @@
         android:id="@+id/view_who"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+
+        android:orientation="horizontal"
         android:padding="10dp">
 
-        <TextView
-            android:id="@+id/text_name_who"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="名稱"
-            android:textColor="@color/colorAccent" />
+        <com.caojing.websocketapp.view.CircleImageView
+            android:id="@+id/circleImageView_from"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/toimg"
+            app:border_color="@color/colorAccent"
+            app:border_width="2dp" />
 
-        <com.vanniktech.emoji.EmojiTextView
-            android:id="@+id/text_message_who"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:text="消息"
-            app:emojiSize="26sp"/>
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_name_who"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="名稱"
+                android:textColor="@color/colorAccent" />
+
+            <com.vanniktech.emoji.EmojiTextView
+                android:id="@+id/text_message_who"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="30dp"
+                android:paddingRight="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:background="@drawable/chatfrom"
+                android:gravity="left|center_vertical"
+                android:textSize="18sp"
+                android:text="我"
+                app:emojiSize="26sp" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -40,23 +64,48 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="right"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:padding="10dp">
 
-
-        <TextView
-            android:id="@+id/text_name"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="名稱"
-            android:textColor="@color/colorAccent" />
+            android:orientation="vertical">
 
-        <com.vanniktech.emoji.EmojiTextView
-            android:id="@+id/text_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:text="消息"
-            app:emojiSize="26sp"/>
+            <TextView
+                android:id="@+id/text_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+               android:layout_gravity="right"
+                android:layout_marginRight="20dp"
+                android:text="名稱"
+                android:textColor="@color/colorAccent" />
+
+            <com.vanniktech.emoji.EmojiTextView
+                android:id="@+id/text_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/chatto"
+                android:paddingRight="30dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                android:gravity="right|center_vertical"
+                android:text="消"
+                android:textSize="18sp"
+                app:emojiSize="26sp" />
+        </LinearLayout>
+
+        <com.caojing.websocketapp.view.CircleImageView
+            android:id="@+id/circleImageView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/fromimg"
+            app:border_color="@color/colorAccent"
+            app:border_width="2dp" />
     </LinearLayout>
+
 </LinearLayout>
