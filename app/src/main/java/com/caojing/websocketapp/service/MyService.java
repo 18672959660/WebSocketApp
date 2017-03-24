@@ -4,13 +4,19 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkRequest;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
@@ -45,8 +51,27 @@ public class MyService extends Service {
     private WebSocketConnection mConnect = new WebSocketConnection();
     private int num;
     private boolean isExit;//true 退出操作
+    private MyBroadcastReceiver receiver;
+
+    class MyBroadcastReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            setmConnect();
+        }
+    }
+
 
     public MyService() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            connectivityManager.requestNetwork(new NetworkRequest.Builder().build(), new ConnectivityManager.NetworkCallback() {
+                @Override
+                public void onAvailable(Network network) {
+                    setmConnect();
+                }
+            });
+        }
     }
 
     public class MyBinder extends Binder {
@@ -54,16 +79,19 @@ public class MyService extends Service {
             if (mConnect.isConnected()) {
                 Log.i(TAG, "發送消息");
                 Log.i(TAG, LoginInfo.getJsonUntis("touser_" + toid + "_" + toname, text));
-                mConnect.sendTextMessage(LoginInfo.getJsonUntis("touser_" + toid + "_" + toname, text));
+                if (!isExit) {
+                    mConnect.sendTextMessage(LoginInfo.getJsonUntis("touser_" + toid + "_" + toname, text));
+                }
             }
         }
 
         public void closeConnect() {
             if (mConnect.isConnected()) {
-                isExit=true;
+                isExit = true;
                 mConnect.disconnect();
             }
         }
+
     }
 
     @Override
@@ -74,6 +102,10 @@ public class MyService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         connect();
+        receiver = new MyBroadcastReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("com.send.netchange");
+        registerReceiver(receiver, intentFilter);
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -88,6 +120,7 @@ public class MyService extends Service {
      */
     private void connect() {
         Log.i(TAG, "ws connect....");
+
         try {
             if (!mConnect.isConnected()) {
                 mConnect.connect(HttpBase.httpurl, new WebSocketHandler() {
@@ -95,8 +128,9 @@ public class MyService extends Service {
                     public void onOpen() {
 //                        Toast.makeText(getApplicationContext(), "連接成功" + HttpBase.httpurl, Toast.LENGTH_SHORT).show();
                         Log.i(TAG, "Status:Connect to " + HttpBase.httpurl);
-                        mConnect.sendTextMessage(LoginInfo.getJsonUntis("sign", "测试"));
-
+                        if (!isExit) {
+                            mConnect.sendTextMessage(LoginInfo.getJsonUntis("sign", "登录"));
+                        }
                     }
 
                     @Override
@@ -105,7 +139,7 @@ public class MyService extends Service {
                         FriendListInfo info = GsonUtils.toBean(payload, FriendListInfo.class);
                         if (info.getCode() == 1) {
                             for (int i = 0; i < info.getUsers_list().size(); i++) {
-                                FriendDBInfo dbInfo = new FriendDBInfo(info.getUsers_list().get(i).getUid(), info.getUsers_list().get(i).getNickname(), "", "0");
+                                FriendDBInfo dbInfo = new FriendDBInfo(info.getUsers_list().get(i).getUid(), info.getUsers_list().get(i).getNickname(), "", "0", "");
                                 MessageDB.getIntance().svaeFriend(dbInfo);
                             }
                             //返回最近联系人，登陆成功,发送广播给登录页跳转到首页
@@ -117,7 +151,7 @@ public class MyService extends Service {
                             num++;
                             if (!LoginInfo.id.equals(info.getFromuser().getUid())) {
                                 //收到其他人发送的消息
-                                FriendDBInfo dbInfo = new FriendDBInfo(info.getFromuser().getUid(), info.getFromuser().getNickname(), info.getMsg().getContent(), "0");
+                                FriendDBInfo dbInfo = new FriendDBInfo(info.getFromuser().getUid(), info.getFromuser().getNickname(), info.getMsg().getContent(), "0", info.getMsg().getTime());
                                 MessageDB.getIntance().svaeFriend(dbInfo);
                                 if (JUtils.isBackground()) {
                                     //程序在后台的时候弹出通知提示
@@ -135,9 +169,9 @@ public class MyService extends Service {
                                         Toast.makeText(getApplicationContext(), "收到消息 " + payload, Toast.LENGTH_SHORT).show();
                                     }
                                 }
-                            }else{
+                            } else {
                                 //自己发送的消息
-                                FriendDBInfo dbInfo = new FriendDBInfo(info.getTouser().getUid(), info.getTouser().getNickname(), info.getMsg().getContent(), "0");
+                                FriendDBInfo dbInfo = new FriendDBInfo(info.getTouser().getUid(), info.getTouser().getNickname(), info.getMsg().getContent(), "0", info.getMsg().getTime());
                                 MessageDB.getIntance().svaeFriend(dbInfo);
                             }
                             MessageDBInfo dbInfo = new MessageDBInfo(info.getFromuser().getUid(),
@@ -154,6 +188,7 @@ public class MyService extends Service {
                             }
                         } else {
                             //错误信息，登录失败
+                            isExit = true;
                             Intent intent = new Intent(LoginInfo.error);
                             intent.putExtra("content", info.getContent());
                             sendBroadcast(intent);
@@ -164,14 +199,14 @@ public class MyService extends Service {
                     @Override
                     public void onClose(int code, String reason) {
                         Log.i(TAG, "Connection lost..");
-                        if (!isExit){
+                        if (!isExit) {
                             connect();
-                        }else{
-                            isExit=false;
+                        } else {
+                            isExit = false;
                         }
-                        Intent intent = new Intent(LoginInfo.error);
-                        intent.putExtra("content", "连接失败，原因" + reason);
-                        sendBroadcast(intent);
+//                        Intent intent = new Intent(LoginInfo.error);
+//                        intent.putExtra("content", "连接失败，原因" + reason);
+//                        sendBroadcast(intent);
                     }
                 });
             }
@@ -209,10 +244,20 @@ public class MyService extends Service {
         nm.notify(num, builder.build());
     }
 
+    /**
+     * 从新连接
+     */
+    public void setmConnect() {
+        if (!mConnect.isConnected()) {
+            isExit = false;
+            connect();
+        }
+    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         mConnect.disconnect();
+        unregisterReceiver(receiver);
     }
 }
