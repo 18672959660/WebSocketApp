@@ -246,7 +246,7 @@ public class MyService extends Service {
      */
     public void setmConnect() {
         if (!mConnect.isConnected()) {
-            isExit = false;
+            isExit = true;
             connect();
         }
     }
