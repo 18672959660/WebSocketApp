@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
     android:orientation="vertical">
 
     <TextView
@@ -16,7 +17,6 @@
         android:id="@+id/view_who"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:orientation="horizontal"
         android:padding="10dp">
 
@@ -45,6 +45,7 @@
                 android:id="@+id/text_message_who"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+               android:autoLink="all"
                 android:paddingLeft="30dp"
                 android:paddingRight="10dp"
                 android:layout_marginLeft="5dp"
@@ -53,8 +54,8 @@
                 android:paddingBottom="5dp"
                 android:background="@drawable/chatfrom"
                 android:gravity="left|center_vertical"
-                android:textSize="18sp"
-                android:text="我"
+                android:textSize="16sp"
+                android:text="消sadsa道具啥u的决赛第三角度上看成都耍大撒就死啊姐弟仨"
                 app:emojiSize="26sp" />
         </LinearLayout>
     </LinearLayout>
@@ -63,13 +64,15 @@
         android:id="@+id/view_me"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="right"
+        android:padding="10dp"
         android:orientation="horizontal"
-        android:padding="10dp">
+       >
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
             android:orientation="vertical">
 
             <TextView
@@ -86,15 +89,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/chatto"
-                android:paddingRight="30dp"
-                android:paddingLeft="10dp"
+                android:paddingRight="20dp"
+                android:paddingLeft="15dp"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="5dp"
-                android:gravity="right|center_vertical"
-                android:text="消"
-                android:textSize="18sp"
+                android:gravity="left|center_vertical"
+                android:text="仨\nfdfd看成大撒就死啊姐"
+                android:textSize="16sp"
                 app:emojiSize="26sp" />
         </LinearLayout>
 

@@ -57,21 +57,19 @@ public class MyService extends Service {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            setmConnect();
+            if (intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, false)) {
+                disConnect();
+                JUtils.Toast("没有网络了");
+            } else {
+                setmConnect();
+                JUtils.Toast("网络恢复了");
+            }
         }
     }
 
 
     public MyService() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            connectivityManager.requestNetwork(new NetworkRequest.Builder().build(), new ConnectivityManager.NetworkCallback() {
-                @Override
-                public void onAvailable(Network network) {
-                    setmConnect();
-                }
-            });
-        }
+
     }
 
     public class MyBinder extends Binder {
@@ -86,10 +84,7 @@ public class MyService extends Service {
         }
 
         public void closeConnect() {
-            if (mConnect.isConnected()) {
-                isExit = true;
-                mConnect.disconnect();
-            }
+            disConnect();
         }
 
     }
@@ -97,6 +92,7 @@ public class MyService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+
     }
 
     @Override
@@ -104,7 +100,8 @@ public class MyService extends Service {
         connect();
         receiver = new MyBroadcastReceiver();
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("com.send.netchange");
+        intentFilter.addAction(MyUtils.CONNECTIVITY_CHANGE);
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(receiver, intentFilter);
         return super.onStartCommand(intent, flags, startId);
     }
@@ -251,6 +248,13 @@ public class MyService extends Service {
         if (!mConnect.isConnected()) {
             isExit = false;
             connect();
+        }
+    }
+
+    public void disConnect() {
+        if (mConnect.isConnected()) {
+            isExit = true;
+            mConnect.disconnect();
         }
     }
 

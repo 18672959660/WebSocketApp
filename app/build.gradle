@@ -20,19 +20,19 @@ android {
 
     }
 
-    productFlavors {
-        product {
-            applicationId "com.caojing.websocketapp"
-            versionCode 1
-            versionName "1.0"
-        }
-
-        producttest {
-            applicationId "com.caojing.websocketapptest"
-            versionCode 1
-            versionName "1.0"
-        }
-    }
+//    productFlavors {
+//        product {
+//            applicationId "com.caojing.websocketapp"
+//            versionCode 1
+//            versionName "1.0"
+//        }
+//
+//        producttest {
+//            applicationId "com.caojing.websocketapptest"
+//            versionCode 1
+//            versionName "1.0"
+//        }
+//    }
 
 }
 

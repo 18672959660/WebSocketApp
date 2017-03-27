@@ -8,6 +8,7 @@ import android.net.NetworkInfo;
 
 import com.caojing.websocketapp.service.MyService;
 import com.caojing.websocketapp.service.MyServiceConnection;
+import com.caojing.websocketapp.utils.MyUtils;
 import com.jude.utils.JUtils;
 
 public class NetChangeReceiver extends BroadcastReceiver {
@@ -15,7 +16,7 @@ public class NetChangeReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
-        if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
+        if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)|| action.equals(MyUtils.CONNECTIVITY_CHANGE)) {
             ConnectivityManager mConnectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo netInfo = mConnectivityManager.getActiveNetworkInfo();
             if (netInfo != null && netInfo.isAvailable()) {

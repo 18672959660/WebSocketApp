@@ -11,4 +11,5 @@ public class MyUtils {
 
     public static String UpdateFriend="com.caojing.websoketapp.updatefriend";
 
+    public static String CONNECTIVITY_CHANGE="com.caojing.websocketapp.CONNECTIVITY_CHANGE";
 }
