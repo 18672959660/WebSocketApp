@@ -48,6 +48,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     class MyBroadcastReceiver extends  BroadcastReceiver{
 
     @Override
+
     public void onReceive(Context context, Intent intent) {
         if (LoginInfo.LoginSucsess.equals(intent.getAction())){
             //登录成功，返回最近联系人
