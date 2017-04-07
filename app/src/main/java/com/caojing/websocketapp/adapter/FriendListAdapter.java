@@ -2,22 +2,15 @@ package com.caojing.websocketapp.adapter;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
-import android.widget.TextClock;
 import android.widget.TextView;
 
 import com.caojing.websocketapp.R;
 import com.caojing.websocketapp.entity.FriendDBInfo;
-import com.caojing.websocketapp.entity.FriendListInfo;
 import com.caojing.websocketapp.utils.TimerUtils;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.vanniktech.emoji.EmojiTextView;
-
-import java.util.List;
 
 /**
  * 朋友列表适配器
@@ -58,8 +51,11 @@ public class FriendListAdapter extends RecyclerArrayAdapter<FriendDBInfo> {
             item_id.setText(data.getUserId());
             item_name.setText(data.getUserName());
             item_msg.setText(data.getMsg());
-            String time = data.getTime().replace("T", " ");
-            item_time.setText(TimerUtils.getTimeStr(time, "yyyy-MM-dd HH:mm:ss"));
+//            String time = data.getTime().replace("T", " ");
+            if(data.getTime()!=null){
+                item_time.setText(TimerUtils.getTimeStr(data.getTime(), "yyyy-MM-dd HH:mm:ss"));
+
+            }
             if ("1".equals(data.getNewMsg())) {
                 //如果提示大于0，就提示用户有几条未读消息，后期可以根据tip的大小来设置有几条未读消息
                 item_tip.setVisibility(itemView.VISIBLE);

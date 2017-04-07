@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@android:color/white"
+        android:background="@color/gray_bg"
         android:visibility="visible"
         app:layout_empty="@layout/view_empty"
         app:layout_error="@layout/view_error"
@@ -23,39 +23,44 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@android:color/white">
+        android:layout_height="wrap_content"
+        android:minHeight="57dp"
+        android:background="@android:color/white"
+        android:paddingLeft="15dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp">
 
         <com.vanniktech.emoji.EmojiEditText
             android:id="@+id/emojiEditText"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:background="@color/colorAccent"
+            android:background="@drawable/edit_line"
             android:imeOptions="actionSend"
             android:inputType="textCapSentences|textMultiLine"
-            android:maxLines="10"
-            android:minHeight="20sp"
-            app:emojiSize="26sp" />
+            android:maxLines="4"
+            app:emojiSize="26sp"
+            android:padding="8dp"/>
 
         <ImageView
             android:id="@+id/btn_emoji"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="45dp"
             android:layout_weight="1"
             android:padding="8dp"
             android:layout_marginLeft="1dp"
+            android:layout_gravity="bottom"
             android:scaleType="fitCenter"
-            android:background="@color/colorAccent"
+            android:background="@color/white"
             android:src="@drawable/chatting_biaoqing_btn_normal"/>
 
         <Button
             android:id="@+id/btn_send"
-            android:layout_width="0dp"
+            android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:layout_marginLeft="1dp"
-            android:background="@color/colorAccent"
-            android:text="发送" />
+            android:background="@color/white"
+            android:text="发送"
+            android:layout_gravity="bottom"/>
     </LinearLayout>
 </LinearLayout>
